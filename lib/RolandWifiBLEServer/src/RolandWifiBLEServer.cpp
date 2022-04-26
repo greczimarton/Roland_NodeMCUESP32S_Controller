@@ -1,4 +1,5 @@
 #include <RolandWifiBLEServer.h>
+#include <secrets.h>
 
 void RolandWifiBLEServer::connectToWiFi()
 {

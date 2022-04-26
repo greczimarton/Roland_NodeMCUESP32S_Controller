@@ -1,7 +1,6 @@
 #include <NimBLEConnectionHandler.h>
 #include <WiFi.h>
 #include <WebServer.h>
-#include <secrets.h>
 
 class RolandWifiBLEServer
 {

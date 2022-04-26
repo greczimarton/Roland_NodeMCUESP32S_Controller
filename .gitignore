@@ -6,4 +6,4 @@
 include/README
 lib/README
 test/README
-lib/RolandWifiServer/src/secrets.h
+lib/RolandWifiBLEServer/src/secrets.h
