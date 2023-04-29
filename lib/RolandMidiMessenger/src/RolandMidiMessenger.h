@@ -30,6 +30,7 @@ enum RolandAddressNames
     METRONOME_SW_TOGGLE,
     SEQUENCER_TEMPO_RO,
     MASTER_VOLUME,
+    METRONOME_BEAT
 };
 
 class RolandRegisterBuilder

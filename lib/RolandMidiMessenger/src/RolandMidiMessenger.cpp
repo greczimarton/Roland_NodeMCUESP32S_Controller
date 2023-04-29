@@ -21,6 +21,8 @@ RolandRegister RolandRegisterBuilder::GetRegisterByAddress(RolandAddressNames ad
         return RolandRegister("SEQUENCER_TEMPO_RO", {0x01, 0x00, 0x01, 0x08}, 2);
     case RolandAddressNames::MASTER_VOLUME:
         return RolandRegister("MASTER_VOLUME", {0x01, 0x00, 0x02, 0x13}, 1);
+    case RolandAddressNames::METRONOME_BEAT:
+        return RolandRegister("METRONOME_BEAT", {0x01, 0x00, 0x02, 0x1F}, 1);
     default:
         throw std::invalid_argument("received invalid address name");
     }
