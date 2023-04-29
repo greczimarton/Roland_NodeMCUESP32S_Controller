@@ -19,6 +19,8 @@ public:
     void InitializeConnection();
     std::vector<uint8_t> BuildMidiMessageFromMessageRequest(RolandMessageRequest messageRequest);
     void SendMidiMessageByRequest(RolandMessageRequest messageRequest);
+    std::vector<uint8_t> BuildMidiMessageFromStringMessage(std::vector<uint8_t> message);
+    void SendMidiMessageByString(std::string message);
     void SendMidiMessage(std::vector<uint8_t> midiMessage);
     void ReadMidiMessage();
 

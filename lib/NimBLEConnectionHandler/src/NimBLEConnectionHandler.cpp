@@ -1,4 +1,5 @@
 #include "NimBLEConnectionHandler.h"
+#include <sstream>
 
 NimBLEClient *NimBleConnectionHandler::Client = nullptr;
 NimBLERemoteService *NimBleConnectionHandler::Service = nullptr;
@@ -112,6 +113,38 @@ std::vector<uint8_t> NimBleConnectionHandler::BuildMidiMessageFromMessageRequest
 void NimBleConnectionHandler::SendMidiMessageByRequest(RolandMessageRequest messageRequest)
 {
     std::vector<uint8_t> midiMessage = this->BuildMidiMessageFromMessageRequest(messageRequest);
+    this->SendMidiMessage(midiMessage);
+    delay(1000);
+}
+
+std::vector<uint8_t> NimBleConnectionHandler::BuildMidiMessageFromStringMessage(std::vector<uint8_t> message)
+{
+    this->GetHeaderAndTimestamp();
+    std::vector<uint8_t> midiMessage = {header, timestamp};
+
+    midiMessage.insert(midiMessage.end(), message.begin(), message.end());
+    Serial.print("\t");
+    for (int i = 0; i < midiMessage.size(); i++)
+    {
+        Serial.print(midiMessage[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.println();
+
+    return midiMessage;
+};
+
+void NimBleConnectionHandler::SendMidiMessageByString(std::string message)
+{
+    std::vector<uint8_t> messageBytes;
+    std::stringstream ss(message);
+    uint16_t byte;
+
+    while (ss >> std::hex >> byte) {
+        messageBytes.push_back(static_cast<uint8_t>(byte));
+    }
+
+    std::vector<uint8_t> midiMessage = this->BuildMidiMessageFromStringMessage(messageBytes);
     this->SendMidiMessage(midiMessage);
     delay(1000);
 }
