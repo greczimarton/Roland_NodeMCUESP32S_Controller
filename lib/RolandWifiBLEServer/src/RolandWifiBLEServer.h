@@ -13,6 +13,7 @@ private:
     void connectToWiFi();
     void setup_routing();
     void handleWrite();
+    void handleWriteMessage();
 };
 // const char *SSID;
 // const char *PWD;

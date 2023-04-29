@@ -19,8 +19,8 @@ void RolandWifiBLEServer::connectToWiFi()
 
 void RolandWifiBLEServer::setup_routing()
 {
-    // wifiServer.on("/", getTemperature);
     this->wifiServer->on("/write", HTTP_POST, std::bind(&RolandWifiBLEServer::handleWrite, this));
+    this->wifiServer->on("/writeMessage", HTTP_POST, std::bind(&RolandWifiBLEServer::handleWriteMessage, this));
 }
 
 void RolandWifiBLEServer::handleWrite()
@@ -49,9 +49,28 @@ void RolandWifiBLEServer::handleWrite()
     this->wifiServer->send(200);
 }
 
+void RolandWifiBLEServer::handleWriteMessage()
+{
+    Serial.println("Got WriteMessage POST request");
+    if (this->wifiServer->hasArg("message") == false)
+    {
+        Serial.println("bad request no message in args");
+        this->wifiServer->send(400);
+        return;
+    }
+
+    std::string message = this->wifiServer->arg("message").c_str();
+
+    this->nimble.SendMidiMessageByString(message);
+
+    // Respond to the client
+    this->wifiServer->send(200);
+}
+
 void RolandWifiBLEServer::startWebServer()
 {
     this->connectToWiFi();
     this->setup_routing();
+    this->wifiServer->enableCORS(true);
     this->wifiServer->begin();
 }
